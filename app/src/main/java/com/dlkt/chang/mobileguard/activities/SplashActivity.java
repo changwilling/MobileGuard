@@ -102,7 +102,7 @@ public class SplashActivity extends AppCompatActivity {
         try {
             PackageInfo info = pm.getPackageInfo(getPackageName(), 0);
             versinCode = info.versionCode;
-            versionName=info.versionName;
+            versionName = info.versionName;
             tv_version_name.setText("" + versionName);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -204,21 +204,21 @@ public class SplashActivity extends AppCompatActivity {
      * 下载最新apk的方法
      */
     private void downLoadNewApk() {
-        HttpUtils utils=new HttpUtils();
+        HttpUtils utils = new HttpUtils();
         //获取apk的保存路径，放在sdcard的根目录中
-        String basePath= Environment.getExternalStorageDirectory().getAbsolutePath();
+        String basePath = Environment.getExternalStorageDirectory().getAbsolutePath();
 
         //这里会出错的原因有basePath应该指定一个文件，而不是单一一个路径,因此应该加上xx.apk(也就是需要自己取名，而非直接试用网络上的名字)
-        utils.download(urlBean.getUrl(), basePath+"/MobileGuard.apk", new RequestCallBack<File>() {
+        utils.download(urlBean.getUrl(), basePath + "/MobileGuard.apk", new RequestCallBack<File>() {
             @Override
             public void onSuccess(ResponseInfo<File> responseInfo) {
-                Toast.makeText(SplashActivity.this,"下载成功",Toast.LENGTH_LONG).show();
+                Toast.makeText(SplashActivity.this, "下载成功", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
-                Toast.makeText(SplashActivity.this,"下载失败",Toast.LENGTH_LONG).show();
-                System.out.println("exception:"+e.getMessage());
+                Toast.makeText(SplashActivity.this, "下载失败", Toast.LENGTH_LONG).show();
+                System.out.println("exception:" + e.getMessage());
             }
         });
     }
@@ -232,7 +232,7 @@ public class SplashActivity extends AppCompatActivity {
         long endMilles = System.currentTimeMillis();
         if (endMilles - startMilles < 3000) {//小于3秒，也要休息到三秒，让动画播放完毕，然后再跳转或者提示更新版本
             try {
-                Thread.sleep(3000-(endMilles - startMilles));
+                Thread.sleep(3000 - (endMilles - startMilles));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
