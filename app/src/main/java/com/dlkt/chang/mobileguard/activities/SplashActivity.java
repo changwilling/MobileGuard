@@ -149,7 +149,6 @@ public class SplashActivity extends AppCompatActivity {
                 }
             }
         }.start();
-
     }
 
     private Handler mHandler = new Handler() {
@@ -219,6 +218,8 @@ public class SplashActivity extends AppCompatActivity {
             public void onFailure(HttpException e, String s) {
                 Toast.makeText(SplashActivity.this, "下载失败", Toast.LENGTH_LONG).show();
                 System.out.println("exception:" + e.getMessage());
+                //进入主页面
+                loadMain();
             }
         });
     }
