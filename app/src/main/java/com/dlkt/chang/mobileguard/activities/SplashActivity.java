@@ -1,7 +1,9 @@
-package com.dlkt.chang.mobileguard;
+package com.dlkt.chang.mobileguard.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.dlkt.chang.mobileguard.R;
 
 public class SplashActivity extends AppCompatActivity {
 
