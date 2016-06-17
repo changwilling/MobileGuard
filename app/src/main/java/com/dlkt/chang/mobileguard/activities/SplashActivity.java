@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.dlkt.chang.mobileguard.R;
 import com.dlkt.chang.mobileguard.domain.UrlBean;
+import com.dlkt.chang.mobileguard.utils.ToastTools;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
@@ -49,7 +51,8 @@ public class SplashActivity extends AppCompatActivity {
     private String versionName;
     private UrlBean urlBean;
     private long startMilles;
-
+    private int errorCode;//检查更新版本相关错误码
+    private int REQUEST_CODE_FOR_INSTALL_APK=2001;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,14 +141,30 @@ public class SplashActivity extends AppCompatActivity {
                             line = br.readLine();
                         }
                         urlBean = parseJson(builder);
-                        isNewVersion(urlBean);
-                    } else {//失败
-                        Toast.makeText(SplashActivity.this, "获取最新版本信息失败", Toast.LENGTH_LONG).show();
+                        errorCode=isNewVersion(urlBean);
+                    } else {//获取信息失败 4001
+                        errorCode=4001;
                     }
-                } catch (MalformedURLException e) {
+                } catch (MalformedURLException e) {//json格式错误 400
+                    errorCode=4002;
                     e.printStackTrace();
-                } catch (IOException e) {
+                } catch (IOException e) {//网络错误4003
+                    errorCode=4003;
                     e.printStackTrace();
+                }finally {
+                    //休眠，保证3秒的动画播放时间
+                    long endMilles = System.currentTimeMillis();
+                    if (endMilles - startMilles < 3000) {//小于3秒，也要休息到三秒，让动画播放完毕，然后再跳转或者提示更新版本
+                        try {
+                            Thread.sleep(3000 - (endMilles - startMilles));
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    //发送消息到主线程，操作UI
+                    Message msg=Message.obtain();
+                    msg.what=errorCode;
+                    mHandler.sendMessage(msg);
                 }
             }
         }.start();
@@ -161,6 +180,18 @@ public class SplashActivity extends AppCompatActivity {
                 case SHOWUPDATEDIALOG://显示更新dialog
                     showUpdateDialog();
                     break;
+                case 4001://获取信息失败
+                    ToastTools.showToast(getApplicationContext(),"获取最新版本信息失败");
+                    loadMain();
+                    break;
+                case 4002://json格式错误
+                    ToastTools.showToast(getApplicationContext(),"json格式错误");
+                    loadMain();
+                    break;
+                case 4003://网络错误4003
+                    ToastTools.showToast(getApplicationContext(),"网络错误");
+                    loadMain();
+                    break;
             }
         }
     };
@@ -171,6 +202,7 @@ public class SplashActivity extends AppCompatActivity {
     private void loadMain() {
         Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
         startActivity(intent);
+        finish();
     }
 
     /**
@@ -206,12 +238,15 @@ public class SplashActivity extends AppCompatActivity {
         HttpUtils utils = new HttpUtils();
         //获取apk的保存路径，放在sdcard的根目录中
         String basePath = Environment.getExternalStorageDirectory().getAbsolutePath();
-
+        final String apkPath=basePath + "/MobileGuard.apk";
         //这里会出错的原因有basePath应该指定一个文件，而不是单一一个路径,因此应该加上xx.apk(也就是需要自己取名，而非直接试用网络上的名字)
-        utils.download(urlBean.getUrl(), basePath + "/MobileGuard.apk", new RequestCallBack<File>() {
+        System.out.println("下载apkURL"+urlBean.getUrl());
+        utils.download(urlBean.getUrl(), basePath + apkPath, new RequestCallBack<File>() {
             @Override
             public void onSuccess(ResponseInfo<File> responseInfo) {
                 Toast.makeText(SplashActivity.this, "下载成功", Toast.LENGTH_LONG).show();
+                //安装apk
+                useTheNewAPK(apkPath);
             }
 
             @Override
@@ -225,29 +260,31 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     /**
+     * 使用新apk，安装替换原apk
+     */
+    private void useTheNewAPK(String apkPath) {
+        Intent intent=new Intent();
+        intent.setAction("android.intent.action.VIEW");
+        intent.addCategory("android.intent.category.DEFAULT");
+        File file=new File(apkPath);
+        Uri data= Uri.fromFile(file);
+        intent.setDataAndType(data,"application/vnd.android.package-archive");
+        startActivityForResult(intent,REQUEST_CODE_FOR_INSTALL_APK);
+    }
+
+
+    /**
      * 判断是否有新版本的方法
      * 该方法目前依然在工作线程中，要想要弹出dialog，操作UI，必须放在主线程中，因此需要试用handler
+     * @return int 返回监测结果
      */
-    private void isNewVersion(UrlBean urlBean) {
+    private int isNewVersion(UrlBean urlBean) {
         int serverCode = urlBean.getVersionCode();
-        long endMilles = System.currentTimeMillis();
-        if (endMilles - startMilles < 3000) {//小于3秒，也要休息到三秒，让动画播放完毕，然后再跳转或者提示更新版本
-            try {
-                Thread.sleep(3000 - (endMilles - startMilles));
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
         if (serverCode == versinCode) {//没有新版本
-            //启动主界面
-            Message msg = Message.obtain();
-            msg.what = LOADMAIN;
-            mHandler.sendMessage(msg);
+            return LOADMAIN;//返回没有新版本信息
         } else {//版本不一致
             //显示更新版本dialog
-            Message msg = Message.obtain();
-            msg.what = SHOWUPDATEDIALOG;
-            mHandler.sendMessage(msg);
+            return SHOWUPDATEDIALOG;//返回版本不一致信息
         }
     }
 
@@ -255,7 +292,7 @@ public class SplashActivity extends AppCompatActivity {
      * 更具StringBuilder解析json，返回URLbean实体类
      *
      * @param builder
-     * @return
+     * @return URLBean实体类
      */
     private UrlBean parseJson(StringBuilder builder) {
         UrlBean bean = new UrlBean();
@@ -276,4 +313,11 @@ public class SplashActivity extends AppCompatActivity {
         return bean;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==REQUEST_CODE_FOR_INSTALL_APK){//启动主界面
+            loadMain();
+        }
+    }
 }
