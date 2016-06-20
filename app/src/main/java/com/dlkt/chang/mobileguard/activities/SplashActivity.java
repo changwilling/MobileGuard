@@ -5,17 +5,19 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +32,6 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -53,6 +54,8 @@ public class SplashActivity extends AppCompatActivity {
     private long startMilles;
     private int errorCode;//检查更新版本相关错误码
     private int REQUEST_CODE_FOR_INSTALL_APK=2001;
+    private ProgressBar pb_download;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +72,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         rl_root = (RelativeLayout) findViewById(R.id.rl_splash_root);
         tv_version_name = (TextView) findViewById(R.id.tv_splash_version_name);
+        pb_download=(ProgressBar)findViewById(R.id.pb_splash_download_progress);
     }
 
     /**
@@ -93,6 +97,7 @@ public class SplashActivity extends AppCompatActivity {
         as.addAnimation(aa);
         as.addAnimation(ra);
         as.addAnimation(sa);
+
         //让view播放动画
         rl_root.startAnimation(as);
     }
@@ -243,7 +248,16 @@ public class SplashActivity extends AppCompatActivity {
         System.out.println("下载apkURL"+urlBean.getUrl());
         utils.download(urlBean.getUrl(), basePath + apkPath, new RequestCallBack<File>() {
             @Override
+            public void onLoading(long total, long current, boolean isUploading) {
+                pb_download.setVisibility(View.VISIBLE);
+                pb_download.setMax((int) total);
+                pb_download.setProgress((int) current);
+                super.onLoading(total,current,isUploading);
+            }
+
+            @Override
             public void onSuccess(ResponseInfo<File> responseInfo) {
+                pb_download.setVisibility(View.GONE);
                 Toast.makeText(SplashActivity.this, "下载成功", Toast.LENGTH_LONG).show();
                 //安装apk
                 useTheNewAPK(apkPath);
@@ -251,6 +265,7 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(HttpException e, String s) {
+                pb_download.setVisibility(View.GONE);
                 Toast.makeText(SplashActivity.this, "下载失败", Toast.LENGTH_LONG).show();
                 System.out.println("exception:" + e.getMessage());
                 //进入主页面

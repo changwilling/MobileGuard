@@ -7,40 +7,52 @@
     android:background="#550000ff"
     android:gravity="center"
     tools:context=".activities.SplashActivity">
+
     <TextView
         android:id="@+id/tv_splash_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Manage your phone"
-        android:textStyle="bold"
-        android:textSize="35sp"
         android:layout_centerHorizontal="true"
-        />
+        android:text="Manage your phone"
+        android:textSize="35sp"
+        android:textStyle="bold" />
+
     <ImageView
         android:id="@+id/iv_splash_icon"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:src="@mipmap/splashicon"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/tv_splash_title"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        />
+        android:src="@mipmap/splashicon" />
+
     <TextView
         android:id="@+id/tv_splash_version_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="第一版"
-        android:textSize="28sp"
-        android:layout_centerInParent="true"
         android:layout_below="@+id/iv_splash_icon"
+        android:layout_centerInParent="true"
         android:layout_marginTop="30dp"
+        android:text="第一版"
         android:textColor="@color/black"
-        />
+        android:textSize="28sp" />
+
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_splash_version_name"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        />
+        android:layout_marginTop="10dp" />
+
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/pb_splash_download_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp" />
 </RelativeLayout>

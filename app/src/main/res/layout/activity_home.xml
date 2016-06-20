@@ -5,11 +5,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:gravity="center"
-        android:background="#5500ff00"
-        android:textSize="35sp"
-        android:text="主界面"/>
+        style="@style/TextTitle"
+        android:text="手机管家"/>
     <com.dlkt.chang.mobileguard.view.MyTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,9 +17,10 @@
         请及时使用各项功能..."/>
     <GridView
         android:id="@+id/gv_home_menus"
+        android:listSelector="@drawable/selector_gv_home_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:numColumns="3"
-        android:verticalSpacing="5dp"
+        android:verticalSpacing="10dp"
         ></GridView>
 </LinearLayout>
