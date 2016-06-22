@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/TextTitle"
-        android:text="手机管家"/>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/title_bar_mode"></include>
+
     <com.dlkt.chang.mobileguard.view.MyTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:singleLine="true"
         android:ellipsize="marquee"
-        android:text="手机安全卫士提供多项功能，
-        保障用户的各项权益免受不法分子的侵扰，
-        请及时使用各项功能..."/>
+        android:singleLine="true"
+        android:text="手机安全卫士提供多项功能，保障用户的各项权益免受不法分子的侵扰，请及时使用各项功能..." />
+
     <GridView
         android:id="@+id/gv_home_menus"
-        android:listSelector="@drawable/selector_gv_home_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:listSelector="@drawable/selector_gv_home_menu"
         android:numColumns="3"
-        android:verticalSpacing="10dp"
-        ></GridView>
+        android:verticalSpacing="10dp"></GridView>
 </LinearLayout>

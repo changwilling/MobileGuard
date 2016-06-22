@@ -6,4 +6,5 @@ package com.dlkt.chang.mobileguard.utils;
 public interface Const {
     String SPFILE="config";//sp 配置文件名
     String PHONEPWD="phonePwd";//sp 手机密码
+    String LOGINSETTINGVIEWS="LOGINSETTINGVIEWS";//sp 是否进入手机防盗界面
 }

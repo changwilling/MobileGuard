@@ -4,18 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        style="@style/TextTitle"
-        android:text="手机防盗界面"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/title_bar_mode"></include>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="防盗保护是否开启:"
@@ -26,6 +24,7 @@
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="5dp"
             android:src="@mipmap/lock" />
     </RelativeLayout>
 

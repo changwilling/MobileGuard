@@ -4,7 +4,7 @@
     android:id="@+id/rl_splash_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#550000ff"
+    android:background="#009900"
     android:gravity="center"
     tools:context=".activities.SplashActivity">
 
@@ -13,9 +13,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Manage your phone"
-        android:textSize="35sp"
-        android:textStyle="bold" />
+        android:text="手机管家"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"/>
 
     <ImageView
         android:id="@+id/iv_splash_icon"
@@ -34,8 +35,8 @@
         android:layout_centerInParent="true"
         android:layout_marginTop="30dp"
         android:text="第一版"
-        android:textColor="@color/black"
-        android:textSize="28sp" />
+        android:textColor="@android:color/white"
+        android:textSize="22sp" />
 
     <ProgressBar
         android:layout_width="wrap_content"

@@ -12,13 +12,13 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dlkt.chang.mobileguard.R;
 import com.dlkt.chang.mobileguard.utils.Const;
 import com.dlkt.chang.mobileguard.utils.SpTools;
 import com.dlkt.chang.mobileguard.utils.ToastTools;
+import com.dlkt.chang.mobileguard.view.CircleImageView;
 
 
 /**
@@ -27,13 +27,16 @@ import com.dlkt.chang.mobileguard.utils.ToastTools;
  */
 public class HomeActivity extends Activity implements AdapterView.OnItemClickListener {
     private GridView gv_menus;
-    private int icons[] = {R.mipmap.safe, R.mipmap.callmsgsafe, R.mipmap.app
-            , R.mipmap.taskmanager, R.mipmap.netmanager, R.mipmap.trojan
-            , R.mipmap.sysoptimize, R.mipmap.atools, R.mipmap.settings};
+    private int icons[] = {R.mipmap.mobile_shoujifangdao, R.mipmap.mobile_tongxunweishi, R.mipmap.mobile_ruanjianguanjia
+            , R.mipmap.mobile_jinchengguanli, R.mipmap.mobile_liuliangtongji, R.mipmap.mobile_bingduchasha
+            , R.mipmap.mobile_huancunguanli, R.mipmap.mobile_gaojigongju, R.mipmap.mobile_shezhizhongxin};
 
     private String names[] = {"手机防盗", "通讯卫士", "软件管家", "进程管理", "流量统计", "病毒查杀",
             "缓存清理", "高级工具", "设置中心"};
     private AlertDialog dialog;
+    private TextView title_left;
+    private TextView title_right;
+    private TextView title_center;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,10 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
 
     private void initViews() {
         setContentView(R.layout.activity_home);
+        //设置titleBar
+        title_center=(TextView)findViewById(R.id.tv_title_center);
+        title_center.setText("手机管家");
+
         gv_menus = (GridView) findViewById(R.id.gv_home_menus);
     }
 
@@ -193,7 +200,7 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
             if (convertView == null) {
                 convertView = View.inflate(getApplicationContext(), R.layout.item_home_menu, null);
                 vh = new ViewHolder();
-                vh.ivIcon = (ImageView) convertView.findViewById(R.id.iv_item_home_icon);
+                vh.ivIcon = (CircleImageView) convertView.findViewById(R.id.iv_item_home_icon);
                 vh.tv_iconName = (TextView) convertView.findViewById(R.id.tv_item_home_name);
                 convertView.setTag(vh);
             } else {
@@ -205,7 +212,7 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
         }
 
         class ViewHolder {
-            private ImageView ivIcon;
+            private CircleImageView ivIcon;
             private TextView tv_iconName;
         }
     }
