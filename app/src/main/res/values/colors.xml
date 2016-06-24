@@ -6,4 +6,7 @@
     <color name="black">#000000</color>
     <color name="greenpress">#E0FFDA</color>
     <color name="greenunpress">#F8EA9B</color>
+    <color name="yellow">#F99503</color>
+    <color name="green">#00ff00</color>
+    <color name="red">#ffff0000</color>
 </resources>

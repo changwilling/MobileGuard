@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import com.dlkt.chang.mobileguard.R;
 import com.dlkt.chang.mobileguard.domain.UrlBean;
-import com.dlkt.chang.mobileguard.utils.ToastTools;
+import com.dlkt.chang.mobileguard.utils.CommonTools;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
@@ -186,15 +186,15 @@ public class SplashActivity extends AppCompatActivity {
                     showUpdateDialog();
                     break;
                 case 4001://获取信息失败
-                    ToastTools.showToast(getApplicationContext(),"获取最新版本信息失败");
+                    CommonTools.showToast(getApplicationContext(),"获取最新版本信息失败");
                     loadMain();
                     break;
                 case 4002://json格式错误
-                    ToastTools.showToast(getApplicationContext(),"json格式错误");
+                    CommonTools.showToast(getApplicationContext(),"json格式错误");
                     loadMain();
                     break;
                 case 4003://网络错误4003
-                    ToastTools.showToast(getApplicationContext(),"网络错误");
+                    CommonTools.showToast(getApplicationContext(),"网络错误");
                     loadMain();
                     break;
             }

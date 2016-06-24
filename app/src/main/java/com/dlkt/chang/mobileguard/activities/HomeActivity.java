@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.dlkt.chang.mobileguard.R;
 import com.dlkt.chang.mobileguard.utils.Const;
 import com.dlkt.chang.mobileguard.utils.SpTools;
-import com.dlkt.chang.mobileguard.utils.ToastTools;
+import com.dlkt.chang.mobileguard.utils.CommonTools;
 import com.dlkt.chang.mobileguard.view.CircleImageView;
 
 
@@ -115,7 +115,7 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
                     startActivity(intent);
                     dialog.dismiss();
                 }else{
-                    ToastTools.showToast(getApplicationContext(),"密码输入错误");
+                    CommonTools.showToast(getApplicationContext(),"密码输入错误");
                 }
             }
         });
@@ -149,11 +149,11 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
                 String code1=etCode1.getText().toString().trim();
                 String code2=etCode2.getText().toString().trim();
                 if(TextUtils.isEmpty(code1)&&TextUtils.isEmpty(code2)){
-                    ToastTools.showToast(getApplicationContext(),"两次密码输入均不能为空");
+                    CommonTools.showToast(getApplicationContext(),"两次密码输入均不能为空");
                     return;
                 }
                 if(!code1.equals(code2)){
-                    ToastTools.showToast(getApplicationContext(),"两次密码输入不一致，请重新输入");
+                    CommonTools.showToast(getApplicationContext(),"两次密码输入不一致，请重新输入");
                     return;
                 }
                 SpTools.setSpString(getApplicationContext(),Const.PHONEPWD,code1);

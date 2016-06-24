@@ -8,6 +8,7 @@
         layout="@layout/title_bar_mode"
         >
     </include>
+
     <LinearLayout
         android:id="@+id/content_setup3"
         android:layout_width="match_parent"
@@ -20,17 +21,28 @@
             android:text="sim卡如果发生变化:\n就会给安全号码发送报警短信"
             android:textSize="18sp"
             android:padding="5dp"/>
-        <RelativeLayout
+        <EditText
+            android:id="@+id/et_setup3_security_num"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="输入安全号码"
+            android:textSize="18sp"
+            android:padding="5dp"
+            />
+        <FrameLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/selector_btn">
 
             <Button
-                android:id="@+id/bt_setup3_bindsim"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/selector_btn"
-                android:text="选择安全号码" />
-        </RelativeLayout>
+                android:id="@+id/bt_setup3_getnumber"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:text="从通讯录选择安全号码" />
+
+        </FrameLayout>
     </LinearLayout>
 
     <LinearLayout

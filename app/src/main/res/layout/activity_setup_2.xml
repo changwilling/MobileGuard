@@ -20,25 +20,27 @@
             android:text="通过绑定sim卡:\n下次重启手机，如果sim卡不一致，就会给安全号码发送短信"
             android:textSize="18sp"
             android:padding="5dp"/>
-        <RelativeLayout
+        <FrameLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/selector_btn">
 
             <Button
                 android:id="@+id/bt_setup2_bindsim"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/selector_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
                 android:text="点击绑定/解绑sim卡" />
-
             <ImageView
                 android:id="@+id/iv_setup2_isbind"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_gravity="center_vertical|right"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/unlock" />
-        </RelativeLayout>
+
+        </FrameLayout>
     </LinearLayout>
 
     <LinearLayout

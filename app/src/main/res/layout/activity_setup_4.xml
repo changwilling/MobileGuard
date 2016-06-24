@@ -9,7 +9,7 @@
         >
     </include>
     <LinearLayout
-        android:id="@+id/content_setup3"
+        android:id="@+id/ll_setup4_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title_bar"
@@ -22,6 +22,7 @@
             android:textSize="18sp"
             android:padding="5dp"/>
         <CheckBox
+            android:id="@+id/cb_setup4_fangdao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"/>
